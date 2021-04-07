@@ -1,0 +1,28 @@
+
+
+<%= form_with model: @tweet, local: true do |form| %>
+  <% if @tweet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+
+      <ul>
+      <% @tweet.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :content %>
+    <%= form.text_area :content, id: :tweet_content, class: "form-control col-6", rows: "3" %>
+  </div>
+
+  <% if current_user %>
+    <%= form.hidden_field :user_id, value:current_user.id %>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit class: "btn btn-light btn-outline-info mt-3 mb-5" %>
+  </div>
+<% end %>

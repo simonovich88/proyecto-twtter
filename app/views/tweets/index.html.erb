@@ -1,0 +1,43 @@
+<div class="wrapper">
+<% if user_signed_in? %>
+  <%= render 'sidebar' %>
+<% end %>
+
+<div class="container pt-5">
+
+
+<div class="row mb-3">
+  <div class="col-xs-8 col-sm-8">
+    <h1>Tweets</h1>
+  </div>
+  <div class="col-sm-4">
+    <h4>Administrator data</h4>
+    <p>email: admin@example.com</p>
+    <p>password: password</p>
+  </div>
+
+  <% if user_signed_in? %>
+    <div class="col-xs-8 col-sm-10 mt-3 ">
+      <h3>New Tweet</h3>
+    </div>
+  <% end %>
+</div>
+
+<% if user_signed_in? %>
+  <%= render 'form' %>
+<% end %>
+
+<%= form_tag tweets_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search], class: "form mr-sm-2" %>
+    <%= submit_tag "Buscar", class: "btn btn-sm btn-light btn-outline-info ml-2" %>
+  </p>
+<% end %>
+
+<%= render 'tweets' %>
+
+  <br>
+  
+</div>
+
+</div>

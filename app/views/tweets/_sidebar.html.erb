@@ -1,0 +1,26 @@
+<nav id="sidebar" class="bg-light text-dark">
+    <div class="pt-5 pl-4">
+        <h3>Users</h3>
+    </div>
+
+    <ul class="list-unstyled pl-4 mt-4">
+        <% User.all.each do |user| %>
+        <div class="row container">
+            <li>
+                <% if user.username? %>
+                    <%= user %>
+                <% else %>
+                    <%= "jane doe" %>
+                <% end %>
+
+                <% if current_user.followed?(user) %>
+                    <%= link_to 'Follow', follow_user_path(user), method: "post", class: "btn btn-info btn-sm m-2" %>
+                <% else %>
+                    <%= link_to 'Unfollow', unfollow_user_path(user), method: "delete", class: "btn btn-info btn-sm" %>
+                <% end %>
+            </li>
+        </div>
+        
+        <% end %>
+    </ul>
+</nav>
