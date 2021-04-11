@@ -4,7 +4,9 @@ class Tweet < ApplicationRecord
   belongs_to :tweet, class_name: 'Tweet', optional: true
   has_many :tweets, foreign_key: :tweet_id, class_name: 'Tweet', dependent: :destroy
   validates :content, presence: true
-
+  
+  scope :date_filter, -> (start, finish) { where('created_at >= ? AND created_at <=?', start, finish) } 
+  
   def liked?(user)
     !!self.likes.find{|like| like.user_id == user.id}
   end
