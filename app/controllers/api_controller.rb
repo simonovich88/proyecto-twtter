@@ -41,12 +41,10 @@ class ApiController < InheritedResources::Base
       @users = User.all
       @tweet_api = []
       
-      
       @tweets.each do |tweet|
         @tweets_likes = Like.where(:tweet_id  => tweet.id)
         @tweet_retweet = Tweet.where(:tweet_id => tweet.id)
         @retweet_from = Tweet.where(:id => tweet.tweet_id)
-  
         @tweet_hash = {"id" => tweet.id}
         @tweet_hash.merge!("content"=> tweet.content)
         @tweet_hash.merge!("user_id"=> tweet.user_id)
@@ -90,6 +88,7 @@ class ApiController < InheritedResources::Base
       params.require(:api).permit(:fecha1, :fecha2)
     end
   
+    
     def tweet_params
       params.require(:tweet).permit(:content, :user_id)
     end
