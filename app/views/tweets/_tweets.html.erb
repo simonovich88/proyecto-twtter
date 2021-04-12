@@ -1,0 +1,67 @@
+<%= paginate @tweets %>
+
+<div class="row mb-3 mt-3">
+  <% @tweets.each do |tweet| %>
+    <div class="col-sm-6 col-md-4 card-deck">
+      <div class="card mt-2">
+          <div class="card-body">
+
+            <!-- contenido -->
+            <h5 class="card-title"><%= render_hashtag(tweet.content) %></h5>
+            <p class="card-text">
+
+              <!-- Foto usuario  -->
+              <%= link_to(image_tag(tweet.user.photo, class: "img-fluid rounded d-inline-block w-25"), tweet) if tweet.user.photo? %>
+              <%= tweet.user %>
+            </p>
+
+            <!-- Fecha -->
+            <p class="card-text">
+              <%= link_to tweet_path(tweet) do %>
+                <small class="text-dark"><%= time_ago_in_words(tweet.created_at) %> ago</small>
+              <% end %>
+            </p>
+            
+            <div class="row">
+              <div class="col-6 mb-3">
+                <p class="card-text">
+                  
+                  <!-- Boton Like -->
+                  
+                  <% if user_signed_in? %>
+                    <% if tweet.liked?(current_user) %>
+                      <%= link_to "Dislike", dislike_path(tweet), method: "delete", class: "btn btn-danger btn-sm" %>
+                    <% else %>
+                      <%= link_to "Like", like_path(tweet), method: "put", class: "btn btn-danger btn-sm" %>
+                    <% end %>
+                  <% end %>
+  
+                  <!-- Boton RT -->
+                  <% if user_signed_in? %>
+                    <%= link_to "RT", retweet_path(tweet), method: "post", class: "btn btn-info btn-sm" %>
+                  <% end %>
+              </p>
+              </div>
+              <div class="col-6">
+                <small class="text-danger"><%= tweet.likes_count %> likes</small>
+                <small class="text-info"><%= tweet.rt_count %> retweets</small>
+              </div>
+            </div>
+            
+            <!-- Botones show, edit, destroy -->
+
+            <p>
+              <%= link_to 'Show', tweet, class: "btn btn-outline-info btn-sm" %> 
+              <% if user_signed_in? && tweet.user_id == current_user.id %>
+                <%= link_to 'Edit', edit_tweet_path(tweet), class: "btn btn-outline-dark btn-sm" %> 
+              <%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-warning btn-sm" %>
+              <% end %>
+              
+            </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @tweets %>
