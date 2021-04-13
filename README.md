@@ -1,3 +1,3 @@
-https://secret-waters-56137.herokuapp.com/ deployed to Heroku
+https://secret-waters-56137.herokuapp.com/ 
 
-https://git.heroku.com/secret-waters-56137.git
+
